@@ -6,12 +6,27 @@ class LoginRepoziotry (
     private val loginService: LoginService
 ): BaseRepository() {
 
-    suspend fun fetchLogin() =
-        loginService.fetchLogin()
+    suspend fun fetchLogin(email:String, password:String) =
+        loginService.fetchLogin(email, password)
 
-    suspend fun fetchRocketDetail() =
+    suspend fun fetchLogout() =
         loginService.fetchLogout()
+
+
+    suspend fun loginRepozitory(email:String, password:String){
+        if((email.equals(""))||(password.equals(""))){
+
+        }
+        else{
+            fetchLogin(email, password)
+        }
     }
 
-}
+    suspend fun logoutRepozitory(role:Int){
+        if(role!=0){
+            fetchLogout()
+        }
+    }
+
+    }
 
