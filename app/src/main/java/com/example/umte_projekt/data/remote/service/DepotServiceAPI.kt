@@ -1,10 +1,12 @@
 package com.example.umte_projekt.data.remote.service
 
+import com.example.umte_projekt.data.model.response.AllPartDepot
+import com.example.umte_projekt.data.model.response.PartDepot
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface DepotService {
+interface DepotServiceAPI {
     @POST("/addItem")
     suspend fun fetchAddItem(
 
@@ -13,23 +15,23 @@ interface DepotService {
        @Path("vyrobceDilu") manufacturePart:String,
        @Path("pocetKusu") countPart:Int
 
-    ):String
+    ):PartDepot?
 
     @POST("/addItemPiece")
     suspend fun fetchAddItemPiece(
         @Path("nazevdilu") namePart:String, @Path("pocetKusu") countPart:Int
 
-    ):String
+    ):PartDepot?
 
     @POST("/removeItemPiece")
     suspend fun fetchRemoveItemPiece(
         @Path("nazevdilu") namePart:String, @Path("pocetKusu") countPart:Int
 
-    ):String
+    ):PartDepot?
 
     @GET("/sklad")
     suspend fun fetchDepot(
 
-    ):List<String>
+    ):List<AllPartDepot>?//???
 
 }

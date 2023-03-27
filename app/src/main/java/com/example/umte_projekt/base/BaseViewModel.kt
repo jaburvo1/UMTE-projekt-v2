@@ -1,12 +1,9 @@
 package com.example.umte_projekt.base
 
-
-
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-
 
 
 abstract class BaseViewModel : ViewModel() {
@@ -42,5 +39,6 @@ abstract class BaseViewModel : ViewModel() {
             State.Failure(throwable)
         )
     }
+
 
 }

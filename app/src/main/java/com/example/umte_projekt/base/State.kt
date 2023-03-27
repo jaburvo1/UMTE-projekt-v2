@@ -1,5 +1,6 @@
 package com.example.umte_projekt.base
 
+
 sealed interface State {
 
     object None: State
@@ -13,3 +14,4 @@ sealed interface State {
     ): State
 
 }
+

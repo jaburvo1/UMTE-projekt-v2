@@ -1,9 +1,9 @@
 package com.example.umte_projekt.data.repository
 
-import com.example.umte_projekt.data.remote.service.DepotService
+import com.example.umte_projekt.data.remote.service.DepotServiceAPI
 
 class DepotRepozitory(
-    private val depotService: DepotService
+    private val depotService: DepotServiceAPI
 ) :BaseRepository() {
   suspend  fun fetchAddItem(typePart:String, subtypePart:String, namePart:String, parametrsPart:String,
                             manufacturePart:String, countPart:Int){
@@ -31,29 +31,12 @@ class DepotRepozitory(
         }
     }
     suspend fun addItemPieceRepozitory(namePart: String, countPart: Int){
-        if(namePart.equals("")){
 
-        }
-        else{
-            if(countPart<=0){
-
-            }
-            else{
-                fetchAddItemPiece(namePart, countPart)
-            }
-        }
+               return fetchAddItemPiece(namePart, countPart)
     }
     suspend fun removeItemPieceRepozitory(namePart: String, countPart: Int){
-        if(namePart.equals("")){
 
-        }
-        else{
-            if(countPart<=0){
+              return  fetchRemoveItemPiece(namePart,countPart)
 
-            }
-            else{
-                fetchRemoveItemPiece(namePart,countPart)
-            }
         }
     }
-}

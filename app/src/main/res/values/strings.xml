@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">UMTE-projekt</string>
+
+    <string name="form_screen_userName">Uživatelské jméno</string>
+    <string name="form_screen_userPassword">Heslo</string>
+    <string name="form_screen_btnLogin">Přihlásit</string>
+    <string name="form_screen_btnClearFromLogin">Vymaž</string>
+
+    <string name="form_screen_formDepot">Formulář</string>
+    <string name="form_screen_namePart">Název dílu</string>
+    <string name="form_screen_typePart">Druh dilu</string>
+    <string name="form_screen_subtypePart">Typ dílu</string>
+    <string name="form_screen_parametrsPart">Parametry dílu</string>
+    <string name="form_screen_manufacturePart">Výrobce dílu</string>
+    <string name="form_screen_countPart">Počet kusů</string>
+    <string name="form_screen_select_operationType_addItem">Vložit nový díl</string>
+    <string name="form_screen_select_operationType_addItemPiece">Naskladni díl</string>
+    <string name="form_screen_select__operationType_removeItemPiece">Vyskladni díl</string>
+    <string name="form_screen_btnClearFromDepot">Vymaž</string>
+    <string name="form_screen_btnOk">OK</string>
+
+
+
 </resources>
