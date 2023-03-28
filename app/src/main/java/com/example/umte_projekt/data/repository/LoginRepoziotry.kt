@@ -6,7 +6,7 @@ import com.example.umte_projekt.data.remote.service.LoginServiceAPI
 import kotlinx.coroutines.runBlocking
 
 class LoginRepoziotry(
-    private val loginServiceAPI: LoginServiceAPI?)
+    private val loginServiceAPI: LoginServiceAPI)
     : BaseRepository() {
     var role: Int = 0
 
@@ -19,7 +19,7 @@ class LoginRepoziotry(
         }
         else{
             runBlocking {
-              val loginUserRespponse = fetchLogin(email, password).toString()
+              val loginUserRespponse = fetchLogin(email, password).toString().toInt()
                 if(loginUserRespponse != null){
                     role =  LoginUser.toString().toInt()
                 }

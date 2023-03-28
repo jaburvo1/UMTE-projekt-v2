@@ -18,18 +18,18 @@ import androidx.compose.ui.unit.dp
 import com.example.umte_projekt.ui.async.FormLoginScreenModel
 
 import android.content.Intent
-import com.example.umte_projekt.data.remote.service.LoginServiceAPI
-import com.example.umte_projekt.data.repository.LoginRepoziotry
+import org.koin.androidx.compose.getViewModel
 
 
 @Composable
- fun FormLoginScreen () {
+ fun FormLoginScreen (
+    viewModel: FormLoginScreenModel = getViewModel()
+ ) {
     val context = LocalContext.current
     val inputEmail = remember { mutableStateOf("") }
     val inputPassword = remember { mutableStateOf("") }
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }
-    //val user: FormLoginScreenModel
-    val roleUser: Int
+
     Row(
         modifier = Modifier
             .padding(16.dp),
@@ -66,7 +66,7 @@ import com.example.umte_projekt.data.repository.LoginRepoziotry
         )
 
 
-        Button(onClick = btnLogin(inputEmail.value,inputPassword.value)) {
+        Button(onClick = { btnLogin(inputEmail.value,inputPassword.value, context, viewModel) }) {
             Text(text = context.getString(R.string.form_screen_btnClearFromLogin))
         }
     }
@@ -76,19 +76,16 @@ import com.example.umte_projekt.data.repository.LoginRepoziotry
 
 }
 
-fun btnLogin(email: String, password: String, context: Context ): () -> Unit {
-///????????
+fun btnLogin(email: String, password: String, context: Context,  viewModel:FormLoginScreenModel) {
 
-    val loginServiceAPI:LoginServiceAPI
-    val loginRepoziotry: LoginRepoziotry = LoginRepoziotry(loginServiceAPI)
-    val user: FormLoginScreenModel = FormLoginScreenModel(loginServiceAPI,loginRepoziotry)
-    val roleUser = user.fetchLoginUser(email, password).toString().toInt()
+   val roleUser = viewModel.fetchLoginUser(email, password).toString().toInt()
+
     if(roleUser == 1){
 
     }
     else{
         if(roleUser == 2){
-            context.startActivity(Intent(context, FormDepotActivity::class.java))
+         context.startActivity(Intent(context, FormDepotActivity::class.java))
 
 
         }

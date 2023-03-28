@@ -21,11 +21,11 @@ val databaseModule = module {
    // single { get<AppDatabase>().noteDao() }
 }
 
-val uiModule = module {
+/*val uiModule = module {
     viewModel { FormLoginScreenModel(get()) }
     viewModel { (email: String, password: String) -> FormLoginScreenModel(email = email, password = password) }
     //viewModel { DatabaseViewModel(get()) }
-}
+}*/
 
 val dataModule = module {
     single { createLoginService() }

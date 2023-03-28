@@ -66,7 +66,7 @@ fun FormDepotScreen() {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "")
                 Image(painter = painterResource(R.drawable.ic_launcher_foreground), contentDescription = "")
                 Text(
-                    text = context.getString(R.string.form_screen_form), style = TextStyle(
+                    text = context.getString(R.string.form_screen_formDepot), style = TextStyle(
                         fontWeight = FontWeight.Normal,
                         fontSize = 24.sp,
                         letterSpacing = 0.sp
@@ -164,14 +164,14 @@ fun FormDepotScreen() {
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Button(onClick = sendData()) {
+           /* Button(onClick = sendData()) {
                 Text(text = context.getString(R.string.form_screen_btnOk))
-            }
+            }*/
         }
         it
     }
 }
 
-fun sendData(): () -> Unit {
+fun sendData() {
 
 }

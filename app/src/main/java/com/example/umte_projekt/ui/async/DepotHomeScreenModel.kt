@@ -8,26 +8,25 @@ import com.example.umte_projekt.data.repository.LoginRepoziotry
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class FormLoginScreenModel(
-   // private val email: String,
+class DepotHomeScreenModel(
+    // private val email: String,
     //private val password: String,
     private val spaceLoginServiceAPI: LoginServiceAPI,
-    private val loginRepoziotry:LoginRepoziotry
+    private val loginRepoziotry: LoginRepoziotry
 ): BaseViewModel()
-
 {
 
     private val _loginUser = MutableStateFlow<Int>(0)
     val loginUser = _loginUser.asStateFlow()
 
-   /* init {
-        fetchLoginUser(email, password )
-    }*/
+    /* init {
+         fetchLoginUser(email, password )
+     }*/
 
-    fun fetchLoginUser(email:String, password:String) = launch(
+    fun fetchLogOutUser() = launch(
         block = {
 
-            loginRepoziotry.loginRepozitory(email, password).also {
+            loginRepoziotry.logoutRepozitory().also{
                 _loginUser.emit(it)
             }
         }
