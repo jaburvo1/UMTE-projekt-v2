@@ -8,3 +8,4 @@ enum class TypeOperation(@StringRes val nameRes: Int) {
     AddItemPiece(R.string.form_screen_select_operationType_addItemPiece),
     RemoveItemPiece(R.string.form_screen_select__operationType_removeItemPiece)
 }
+

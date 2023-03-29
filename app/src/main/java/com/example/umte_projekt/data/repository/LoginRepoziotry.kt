@@ -1,5 +1,6 @@
 package com.example.umte_projekt.data.repository
 
+import android.annotation.SuppressLint
 import com.example.umte_projekt.data.model.response.LoginUser
 
 import com.example.umte_projekt.data.remote.service.LoginServiceAPI
@@ -13,6 +14,7 @@ class LoginRepoziotry(
 
 
 
+      @SuppressLint("SuspiciousIndentation")
       fun loginRepozitory(email:String, password:String):Int{
         if((email.equals(""))||(password.equals(""))){
             role = -1;

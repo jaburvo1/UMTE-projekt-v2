@@ -9,10 +9,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class FormLoginScreenModel(
-   // private val email: String,
+    //private val email: String,
     //private val password: String,
-    private val spaceLoginServiceAPI: LoginServiceAPI,
-    private val loginRepoziotry:LoginRepoziotry
+    //private val spaceLoginServiceAPI: LoginServiceAPI,
+   private val loginRepoziotry:LoginRepoziotry
+
 ): BaseViewModel()
 
 {
