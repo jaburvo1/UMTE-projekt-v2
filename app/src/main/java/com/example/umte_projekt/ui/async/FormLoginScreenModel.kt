@@ -1,10 +1,9 @@
 package com.example.umte_projekt.ui.async
 
-import android.view.Choreographer.VsyncCallback
+import android.util.Log
 import com.example.umte_projekt.base.BaseViewModel
-import com.example.umte_projekt.data.model.response.LoginUser
-import com.example.umte_projekt.data.remote.service.LoginServiceAPI
 import com.example.umte_projekt.data.repository.LoginRepoziotry
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -25,11 +24,21 @@ class FormLoginScreenModel(
         fetchLoginUser(email, password )
     }*/
 
-    fun fetchLoginUser(email:String, password:String) = launch(
-        block = {
 
-            loginRepoziotry.loginRepozitory(email, password).also {
-                _loginUser.emit(it)
+    fun fetchLoginUser(email:String, password:String) = launch(
+
+        block = {
+            try {
+
+
+                loginRepoziotry.loginRepozitory(email, password).also {
+                    _loginUser.emit(it) //zde spadne
+                }
+            }catch (ce: CancellationException) {
+                // You can ignore or log this exception
+            } catch (e: Exception) {
+                // Here it's better to at least log the exception
+                Log.e("TAG","Coroutine error", e)
             }
         }
     )

@@ -2,22 +2,24 @@ package com.example.umte_projekt.ui.basic.form
 
 
 import android.content.Context
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Alignment
-import cz.uhk.umte.R
+import android.content.Intent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.umte_projekt.ui.async.FormLoginScreenModel
-
-import android.content.Intent
+import cz.uhk.umte.R
 import org.koin.androidx.compose.getViewModel
 
 
@@ -29,12 +31,17 @@ import org.koin.androidx.compose.getViewModel
     val inputEmail = remember { mutableStateOf("") }
     val inputPassword = remember { mutableStateOf("") }
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }
+    val userRole = viewModel.loginUser.collectAsState()
+    if(userRole.value == 1){
+        context.startActivity(Intent(context, FormDepotActivity::class.java))
 
-    Row(
+    }
+    Column(
         modifier = Modifier
-            .padding(16.dp),
+            .padding(16.dp)
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
 
-        verticalAlignment = Alignment.CenterVertically
     ) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
@@ -67,7 +74,14 @@ import org.koin.androidx.compose.getViewModel
 
 
         Button(onClick = { btnLogin(inputEmail.value,inputPassword.value, context, viewModel) }) {
-            Text(text = context.getString(R.string.form_screen_btnClearFromLogin))
+            Text(text = context.getString(R.string.form_screen_btnLogin))
+        }
+
+        Button(onClick = {
+            inputEmail.value=""
+            inputPassword.value=""
+        }) {
+            Text(text = context.getString(R.string.form_screen_btnClear))
         }
     }
 
@@ -78,27 +92,10 @@ import org.koin.androidx.compose.getViewModel
 
 fun btnLogin(email: String, password: String, context: Context,  viewModel:FormLoginScreenModel) {
 
-   val roleUser = viewModel.fetchLoginUser(email, password).toString().toInt()
-
-    if(roleUser == 1){
+   viewModel.fetchLoginUser(email, password)
 
     }
-    else{
-        if(roleUser == 2){
-         context.startActivity(Intent(context, FormDepotActivity::class.java))
 
-
-        }
-        else{
-            if(roleUser == 3){
-
-            }
-            else{
-                //zobrazit alert dialog
-            }
-        }
-    }
-}
 
 
 

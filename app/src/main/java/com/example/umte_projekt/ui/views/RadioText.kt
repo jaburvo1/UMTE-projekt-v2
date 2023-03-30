@@ -13,7 +13,8 @@ fun RadioText(label: String, operatinoTypeSelection: MutableState<String>) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
-        RadioButton(selected = operatinoTypeSelection.value == label, onClick = { operatinoTypeSelection.value = label })
+        RadioButton(selected = operatinoTypeSelection.value == label, onClick = { operatinoTypeSelection.value = label})
         Text(text = label)
+
     }
 }

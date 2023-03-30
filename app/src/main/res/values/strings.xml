@@ -16,7 +16,7 @@
     <string name="form_screen_select_operationType_addItem">Vložit nový díl</string>
     <string name="form_screen_select_operationType_addItemPiece">Naskladni díl</string>
     <string name="form_screen_select__operationType_removeItemPiece">Vyskladni díl</string>
-    <string name="form_screen_btnClearFromDepot">Vymaž</string>
+    <string name="form_screen_btnClear">Vymaž</string>
     <string name="form_screen_btnOk">OK</string>
 
 

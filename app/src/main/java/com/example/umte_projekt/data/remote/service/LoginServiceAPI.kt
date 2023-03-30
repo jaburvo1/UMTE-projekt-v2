@@ -1,20 +1,18 @@
 package com.example.umte_projekt.data.remote.service
 
 
-import retrofit2.http.GET
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 
 interface LoginServiceAPI {
-    @Multipart
+
+    @FormUrlEncoded
     @POST("loginApp")
     suspend fun fetchLogin(
-        @Path("userEmail") email: String, @Path("userPassword") password: String
-    ): Int
+        @Field("userEmail") email: String, @Field("userPassword") password: String
+    ):String?
 
     @GET("logoutApp")
     suspend fun fetchLogout(
-    ):Int
+    ):Int?
 }
