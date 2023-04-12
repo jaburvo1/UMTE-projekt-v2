@@ -16,6 +16,31 @@ class FormDepotScreenModel(
 
 
 
+    fun fetchAddItem(typePart:String, subtypePart:String, namePart:String, parametrsPart:String,manufacturePart:String,
+                     countPart:Int) = launch(
+        block = {
+            try {
+                if (namePart.equals("")) {
+
+                } else {
+                    if (countPart <= 0) {
+
+                    } else {
+                        depotRepoziotry.addItemRepozitory(typePart, subtypePart, namePart, parametrsPart,manufacturePart, countPart ).also { it ->
+                            _depotRepoziotry.emit(it)
+                        }
+
+                    }
+                }
+            }catch (ce: CancellationException) {
+                // You can ignore or log this exception
+            } catch (e: Exception) {
+                // Here it's better to at least log the exception
+                Log.e("TAG","Coroutine error", e)
+            }
+        }
+    )
+
     fun fetchAddItemPiece(namePart:String, countPart:Int) = launch(
         block = {
             try {

@@ -211,7 +211,7 @@ fun FormDepotScreen(
         Row() {
 
 
-            Button(onClick = { sendData(context, viewModel, inputNamePart.value, inputCountPart.value)
+            Button(onClick = { sendData(context, viewModel, inputNamePart.value, inputCountPart.value, inputTypePart.value, inputSubtypePart.value, inputParametrsPart.value, inputManufacturePart.value)
             openDialogForm.value=true}) {
                 Text(text = context.getString(R.string.form_screen_btnOk))
             }
@@ -234,11 +234,21 @@ fun FormDepotScreen(
     }
 }
 
-fun sendData(context: Context, viewModel: FormDepotScreenModel, namePart: String, countPartString: String) {
+fun sendData(
+    context: Context,
+    viewModel: FormDepotScreenModel,
+    namePart: String,
+    countPartString: String,
+    typePart: String,
+    subtpyPart: String,
+    parametrsPart: String,
+    manufacturePart: String
+) {
 // výber z radioButon
     val countPart = countPartString.toInt()
    //viewModel.fetchAddItemPiece(namePart, countPart )
-    viewModel.fetchRemoveItemPiece(namePart, countPart)
+    //viewModel.fetchRemoveItemPiece(namePart, countPart)
+    viewModel.fetchAddItem(typePart,subtpyPart,namePart,parametrsPart,manufacturePart,countPart)
 
 
 

@@ -1,7 +1,6 @@
 package com.example.umte_projekt.data.remote.service
 
 import com.example.umte_projekt.data.model.response.AllPartDepot
-import com.example.umte_projekt.data.model.response.PartDepotStatus
 import retrofit2.http.*
 
 interface DepotServiceAPI {
@@ -14,14 +13,14 @@ interface DepotServiceAPI {
         @Field("vyrobceDilu") manufacturePart:String,
         @Field("pocetKusu") countPart:Int
 
-    ): PartDepotStatus?
+    ): Map<String, String>?
 
     @FormUrlEncoded
     @POST("addItemPieceApp")
     suspend fun fetchAddItemPiece(
         @Field("nazevdilu") namePart:String, @Field("pocetKusu") countPart:Int
 
-    ):PartDepotStatus?
+    ):Map<String, String>?
     @FormUrlEncoded
     @POST("removeItemPieceApp")
     suspend fun fetchRemoveItemPiece(
