@@ -1,36 +1,33 @@
 package com.example.umte_projekt.data.remote.service
 
 import com.example.umte_projekt.data.model.response.AllPartDepot
-import com.example.umte_projekt.data.model.response.PartDepot
-import retrofit2.http.GET
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Path
+import com.example.umte_projekt.data.model.response.PartDepotStatus
+import retrofit2.http.*
 
 interface DepotServiceAPI {
-    @Multipart
-    @POST("addItem")
+    @FormUrlEncoded
+    @POST("addItemApp")
     suspend fun fetchAddItem(
 
-       @Path("druhDilu") typePart:String,  @Path("typDilu")subtypePart:String,
-       @Path("nazevdilu") namePart:String,  @Path("parametryDilu")parametrsPart:String,
-       @Path("vyrobceDilu") manufacturePart:String,
-       @Path("pocetKusu") countPart:Int
+        @Field("druhDilu") typePart:String,  @Field("typDilu")subtypePart:String,
+        @Field("nazevdilu") namePart:String,  @Field("parametryDilu")parametrsPart:String,
+        @Field("vyrobceDilu") manufacturePart:String,
+        @Field("pocetKusu") countPart:Int
 
-    ):PartDepot?
+    ): PartDepotStatus?
 
-    @Multipart
-    @POST("addItemPiece")
+    @FormUrlEncoded
+    @POST("addItemPieceApp")
     suspend fun fetchAddItemPiece(
-        @Path("nazevdilu") namePart:String, @Path("pocetKusu") countPart:Int
+        @Field("nazevdilu") namePart:String, @Field("pocetKusu") countPart:Int
 
-    ):PartDepot?
-    @Multipart
-    @POST("removeItemPiece")
+    ):PartDepotStatus?
+    @FormUrlEncoded
+    @POST("removeItemPieceApp")
     suspend fun fetchRemoveItemPiece(
-        @Path("nazevdilu") namePart:String, @Path("pocetKusu") countPart:Int
+        @Field("nazevdilu") namePart:String, @Field("pocetKusu") countPart:Int
 
-    ):PartDepot?
+    ): Map<String, String>?
 
     @GET("/sklad")
     suspend fun fetchDepot(

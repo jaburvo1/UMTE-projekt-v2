@@ -11,7 +11,7 @@ class FormDepotScreenModel(
     private val depotRepoziotry: DepotRepozitory
 
 ) : BaseViewModel() {
-    private val _depotRepoziotry = MutableStateFlow<Int>(0)
+    private val _depotRepoziotry = MutableStateFlow<String?>("")
     val depot = _depotRepoziotry.asStateFlow()
 
 
@@ -26,7 +26,7 @@ class FormDepotScreenModel(
 
                 } else { 
                     depotRepoziotry.addItemPieceRepozitory(namePart, countPart).also { it ->
-                    //    _depotRepoziotry.emit(it)
+                       _depotRepoziotry.emit(it)
                     }
 
                 }
@@ -51,7 +51,7 @@ class FormDepotScreenModel(
 
                         } else {
                             depotRepoziotry.removeItemPieceRepozitory(namePart, countPart).also {
-                       //        _depotRepoziotry.emit(it)
+                            _depotRepoziotry.emit(it)
                             }
 
                         }
@@ -59,6 +59,8 @@ class FormDepotScreenModel(
                 }
             )
 }
+
+
 
 
 

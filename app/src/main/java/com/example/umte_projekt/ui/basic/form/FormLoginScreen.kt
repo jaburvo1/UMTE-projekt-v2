@@ -7,10 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,9 +15,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import com.example.umte_projekt.ui.async.FormLoginScreenModel
 import cz.uhk.umte.R
 import org.koin.androidx.compose.getViewModel
+
 
 
 @Composable
@@ -31,11 +30,109 @@ import org.koin.androidx.compose.getViewModel
     val inputEmail = remember { mutableStateOf("") }
     val inputPassword = remember { mutableStateOf("") }
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }
-    val userRole = viewModel.loginUser.collectAsState()
-    if(userRole.value == 1){
+    val userRolePom = viewModel.loginUser.collectAsState()
+
+    var openDialog1 = remember { mutableStateOf(false)  }
+    var openDialog2 = remember { mutableStateOf(false)  }
+
+    openDialog1.value = false
+    openDialog2.value = false
+
+    if(userRolePom.value == 2){
+
         context.startActivity(Intent(context, FormDepotActivity::class.java))
+        //context.startActivity(Intent(context, DepotHomeAcitvity::class.java))
 
     }
+    else{
+        if((userRolePom.value == 1)|| (userRolePom.value == 3)){
+            context.startActivity(Intent(context, AnotherUserActivity::class.java))
+        }
+        else {
+            if(userRolePom.value == -1) {
+                openDialog1.value = true
+            }
+            else{
+                if(userRolePom.value == -2) {
+                    openDialog2.value = true
+                }
+                else{
+                    openDialog1.value = false
+                    openDialog2.value = false
+
+
+
+                }
+
+
+            }
+        }
+        }
+
+    if (openDialog1.value == true) {
+        AlertDialog(
+            onDismissRequest = {
+                // Dismiss the dialog when the user clicks outside the dialog or on the back
+                // button. If you want to disable that functionality, simply use an empty
+                // onCloseRequest.
+
+
+               openDialog1.value = false
+               val properties = DialogProperties()
+            },
+            title = {
+                Text(text = "Chyba přihlášení")
+            },
+            text = {
+                Text("Špatně zadaný email, nebo heslo, nebo neexistujcí uživatel ")
+            },
+            confirmButton = {
+                Button(
+
+                    onClick = {
+                        viewModel.setRole(0);
+                        //openDialog1.value = !openDialog1.value
+
+
+                    }) {
+                    Text("ok")
+                }
+            }
+        )
+    }
+    if (openDialog2.value==true) {
+        AlertDialog(
+            onDismissRequest = {
+                // Dismiss the dialog when the user clicks outside the dialog or on the back
+                // button. If you want to disable that functionality, simply use an empty
+                // onCloseRequest.
+
+
+                openDialog2.value = false
+                val properties = DialogProperties()
+            },
+            title = {
+                Text(text = "Chyba přihlášení")
+            },
+            text = {
+                Text("Nevyplněné příhlašovací údaje email a heslo.")
+            },
+            confirmButton = {
+                Button(
+
+                    onClick = {
+                        //openDialog2.value = !openDialog2.value
+                        viewModel.setRole(0);
+
+
+
+                    }) {
+                    Text("ok")
+                }
+            }
+        )
+    }
+
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -93,6 +190,7 @@ import org.koin.androidx.compose.getViewModel
 fun btnLogin(email: String, password: String, context: Context,  viewModel:FormLoginScreenModel) {
 
    viewModel.fetchLoginUser(email, password)
+
 
     }
 

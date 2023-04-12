@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import com.example.umte_projekt.data.enum.TypeOperation
 import com.example.umte_projekt.ui.async.FormDepotScreenModel
 import com.example.umte_projekt.ui.views.RadioText
@@ -31,7 +33,7 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun FormDepotScreen(
-    viewModel: FormDepotScreenModel = getViewModel()
+    viewModel: FormDepotScreenModel = getViewModel(),
 ) {
     val context = LocalContext.current
     val inputNamePart = remember { mutableStateOf("") }
@@ -41,7 +43,11 @@ fun FormDepotScreen(
     val inputManufacturePart = remember { mutableStateOf("") }
     val inputCountPart = remember { mutableStateOf("") }
 
+    val status = viewModel.depot.collectAsState()
+
     val operatinoTypeSelection = remember { mutableStateOf("") }
+    var openDialogForm = remember { mutableStateOf(false)  }
+
 
 
     Scaffold(topBar = {
@@ -60,6 +66,36 @@ fun FormDepotScreen(
         )
     }
     ) {
+        if (openDialogForm.value == true) {
+            AlertDialog(
+                onDismissRequest = {
+                    // Dismiss the dialog when the user clicks outside the dialog or on the back
+                    // button. If you want to disable that functionality, simply use an empty
+                    // onCloseRequest.
+
+
+                    openDialogForm.value = false
+                    val properties = DialogProperties()
+                },
+                title = {
+                    Text(text = "info spracování pozadavku")
+                },
+                text = {
+                    Text(status.value.toString())
+                },
+                confirmButton = {
+                    Button(
+
+                        onClick = {
+                            openDialogForm.value = !openDialogForm.value
+
+
+                        }) {
+                        Text("ok")
+                    }
+                }
+            )
+        }
         Column(
             modifier = Modifier
                 .padding(16.dp)
@@ -167,6 +203,7 @@ fun FormDepotScreen(
                 RadioText(label = context.getString(TypeOperation.AddItem.nameRes), operatinoTypeSelection)
                 RadioText(label = context.getString(TypeOperation.AddItemPiece.nameRes), operatinoTypeSelection)
                 RadioText(label = context.getString(TypeOperation.RemoveItemPiece.nameRes), operatinoTypeSelection)
+
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -174,50 +211,38 @@ fun FormDepotScreen(
         Row() {
 
 
-            Button(onClick = { sendData(context, viewModel, inputNamePart.value, inputCountPart.value)}) {
+            Button(onClick = { sendData(context, viewModel, inputNamePart.value, inputCountPart.value)
+            openDialogForm.value=true}) {
                 Text(text = context.getString(R.string.form_screen_btnOk))
             }
-            /*
-            Button(onClick = ) {
+
+            Button(onClick = {
+                inputNamePart.value =""
+                inputTypePart.value =""
+                inputSubtypePart.value =""
+                inputParametrsPart.value =""
+                inputManufacturePart.value =""
+                inputCountPart.value =""
+            }) {
                 Text(text = context.getString(R.string.form_screen_btnClear))
             }
 
-             */
+
             }
         }
         it
     }
 }
 
-fun sendData(context: Context, viewModel: FormDepotScreenModel, namePeart: String, countPart: String) {
+fun sendData(context: Context, viewModel: FormDepotScreenModel, namePart: String, countPartString: String) {
 // výber z radioButon
-    var typeOpearationAddItem = context.getString(TypeOperation.AddItem.nameRes)
-    var addItem = typeOpearationAddItem.toBoolean()
-
-    var typeOpearationAddItemPiece = context.getString(TypeOperation.AddItemPiece.nameRes)
-    var addItemPiece = typeOpearationAddItemPiece.toBoolean()
-
-    var typeOpearationRemoveItemPiece = context.getString(TypeOperation.RemoveItemPiece.nameRes)
-    var removeItemPiece = typeOpearationRemoveItemPiece.toBoolean()
-
-    var status: String = ""
+    val countPart = countPartString.toInt()
+   //viewModel.fetchAddItemPiece(namePart, countPart )
+    viewModel.fetchRemoveItemPiece(namePart, countPart)
 
 
 
-if(addItem  == true) {
-
-}else{
-    if(addItemPiece== true){
-        status = viewModel.fetchAddItemPiece(namePart = namePeart, countPart = countPart.toInt()).toString()
-    }else{
-        if (removeItemPiece == true){
-            status = viewModel.fetchRemoveItemPiece(namePart = namePeart, countPart = countPart.toInt()).toString()
-
-        }else{
-            status = "  Není nevybrana žádná akce"
-        }
     }
-}
-    // alert text satus
 
-}
+
+

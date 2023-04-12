@@ -15,6 +15,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.UMTEprojekt"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name="com.example.umte_projekt.MainActivity"
@@ -39,6 +40,11 @@
 
         <activity
             android:name="com.example.umte_projekt.ui.basic.lazylist.PartLazyListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.UMTEprojekt" />
+
+        <activity
+            android:name="com.example.umte_projekt.ui.basic.form.AnotherUserActivity"
             android:exported="false"
             android:theme="@style/Theme.UMTEprojekt" />
 

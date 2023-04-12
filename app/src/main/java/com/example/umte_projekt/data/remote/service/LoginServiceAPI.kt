@@ -10,7 +10,7 @@ interface LoginServiceAPI {
     @POST("loginApp")
     suspend fun fetchLogin(
         @Field("userEmail") email: String, @Field("userPassword") password: String
-    ):String?
+    ):Int?
 
     @GET("logoutApp")
     suspend fun fetchLogout(

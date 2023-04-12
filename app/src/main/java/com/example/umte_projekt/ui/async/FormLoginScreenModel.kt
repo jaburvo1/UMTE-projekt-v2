@@ -7,10 +7,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+
 class FormLoginScreenModel(
-    //private val email: String,
-    //private val password: String,
-    //private val spaceLoginServiceAPI: LoginServiceAPI,
+
    private val loginRepoziotry:LoginRepoziotry
 
 ): BaseViewModel()
@@ -20,19 +19,16 @@ class FormLoginScreenModel(
     private val _loginUser = MutableStateFlow<Int>(0)
     val loginUser = _loginUser.asStateFlow()
 
-   /* init {
-        fetchLoginUser(email, password )
-    }*/
-
 
     fun fetchLoginUser(email:String, password:String) = launch(
 
         block = {
             try {
 
+//zde padá do e: Exception
 
-                loginRepoziotry.loginRepozitory(email, password).also {
-                    _loginUser.emit(it) //zde spadne
+               loginRepoziotry.loginRepozitory(email, password).also {
+                   _loginUser.emit(it) //zde spadne
                 }
             }catch (ce: CancellationException) {
                 // You can ignore or log this exception
@@ -43,5 +39,9 @@ class FormLoginScreenModel(
         }
     )
 
-
-}
+    fun setRole(role:Int) = launch(
+        block = {
+            _loginUser.emit(role)
+        }
+    )
+    }

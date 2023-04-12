@@ -2,11 +2,13 @@ package com.example.umte_projekt.data.model.response
 
 import kotlinx.serialization.SerialName
 
+
 @kotlinx.serialization.Serializable
-data class PartDepot (
+data class PartDepotStatus (
     @SerialName("statusText")
     val status:String
         )
+
 
 @kotlinx.serialization.Serializable
 data class AllPartDepot(
