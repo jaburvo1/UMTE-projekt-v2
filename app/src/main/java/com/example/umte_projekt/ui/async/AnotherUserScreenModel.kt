@@ -11,7 +11,7 @@ class AnotherUserScreenModel(
     private val loginRepoziotry: LoginRepoziotry
 ): BaseViewModel()
   {
-      private val _loginUser = MutableStateFlow<Int>(0)
+      private val _loginUser = MutableStateFlow<Int>(1)
       val loginUser = _loginUser.asStateFlow()
 
       fun fetchLogoutUser() = launch(

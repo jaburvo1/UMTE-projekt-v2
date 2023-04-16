@@ -3,10 +3,7 @@ import com.example.umte_projekt.data.remote.service.DepotServiceAPI
 import com.example.umte_projekt.data.remote.service.LoginServiceAPI
 import com.example.umte_projekt.data.repository.DepotRepozitory
 import com.example.umte_projekt.data.repository.LoginRepoziotry
-import com.example.umte_projekt.ui.async.DepotHomeScreenModel
-import com.example.umte_projekt.ui.async.FormDepotScreenModel
-import com.example.umte_projekt.ui.async.FormLoginScreenModel
-import com.example.umte_projekt.ui.async.PartLazyListScreenModel
+import com.example.umte_projekt.ui.async.*
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
@@ -50,6 +47,9 @@ val uiModuleHomeDepot = module {
 
     //viewModel { DatabaseViewModel(get()) }
 }
+    val uiModuleAnotherUser = module {
+        viewModel{ return@viewModel AnotherUserScreenModel(get()) }
+    }
 
     val dataModuleLogin = module {
         single { createLoginService() }

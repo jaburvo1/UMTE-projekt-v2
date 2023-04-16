@@ -17,7 +17,7 @@ class App : Application() {
 
         startKoin {
             androidContext(applicationContext)
-            modules(listOf(uiModuleLogin, dataModuleLogin, uiModuleDepot, dataModuleDepot, uiModuleHomeDepot, uiModuleDepotList))
+            modules(listOf(uiModuleLogin, dataModuleLogin, uiModuleDepot, dataModuleDepot, uiModuleHomeDepot, uiModuleDepotList, uiModuleAnotherUser))
 
         }
 /*

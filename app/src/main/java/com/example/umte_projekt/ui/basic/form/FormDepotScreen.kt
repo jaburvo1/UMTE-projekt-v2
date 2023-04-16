@@ -2,6 +2,7 @@ package com.example.umte_projekt.ui.basic.form
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import com.example.umte_projekt.data.enum.TypeOperation
 import com.example.umte_projekt.ui.async.FormDepotScreenModel
+import com.example.umte_projekt.ui.readerQR.BarcodeAnalyserActivity
 import com.example.umte_projekt.ui.views.RadioText
 import cz.uhk.umte.R
 import org.koin.androidx.compose.getViewModel
@@ -234,12 +236,22 @@ fun FormDepotScreen(
                 Text(text = context.getString(R.string.form_screen_btnClear))
             }
 
+            Button(onClick = {btnReadQR(context)}) {
+                Text(text = context.getString(R.string.form_screen_btnQRreader))
+            }
 
             }
         }
         it
     }
+
 }
+
+fun btnReadQR(context: Context)  {
+context.startActivity(Intent(context, BarcodeAnalyserActivity::class.java))
+}
+
+
 
 fun sendData(
     context: Context,
