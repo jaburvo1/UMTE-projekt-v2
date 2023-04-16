@@ -1,6 +1,9 @@
 package com.example.umte_projekt.data.repository
 
+import com.example.umte_projekt.data.model.response.AllPartDepot
 import com.example.umte_projekt.data.remote.service.DepotServiceAPI
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 class DepotRepozitory(
     private val depotService: DepotServiceAPI
@@ -53,8 +56,19 @@ class DepotRepozitory(
     }
         return statusText
     }
-    suspend fun fetchDepot(){
-        depotService.fetchDepot()
+    suspend fun fetchDepot(): List<AllPartDepot> {
+       val partsListPomString: AllPartDepot? = depotService.fetchDepot()
+        var parts = ArrayList<AllPartDepot>()
+        if(partsListPomString!=null) {
+            parts = Json.decodeFromString<List<AllPartDepot>>(partsListPomString.toString()) as ArrayList<AllPartDepot>
+        }
+      /*  else
+        {
+            parts
+
+
+        }*/
+        return parts
     }
 
     suspend fun addItemRepozitory(typePart:String, subtypePart:String, namePart:String, parametrsPart:String,
@@ -71,7 +85,7 @@ class DepotRepozitory(
     }
     suspend fun addItemPieceRepozitory(namePart: String, countPart: Int): String?{
         var status:String
-        if(namePart.equals(""))
+        if((namePart=="")||(namePart==" ")||(countPart<=0))
             {
             status = "Nevyplnení nazev dílu, nebo počet kusu"
             }
@@ -83,7 +97,7 @@ class DepotRepozitory(
     }
     suspend fun removeItemPieceRepozitory(namePart: String, countPart: Int):String?{
         var status:String
-        if(namePart.equals(""))
+        if((namePart=="")||(namePart==" ")||(countPart<=0))
         {
             status = "Nevyplnení nazev dílu, nebo počet kusu"
         }
@@ -93,5 +107,13 @@ class DepotRepozitory(
               //return  fetchRemoveItemPiece(namePart,countPart).toString()
         return status
 
+    }
+    suspend fun depotPart(){
+        fetchDepot()
+    }
+     fun default():String?{
+
+       var status = "Nevybrán typ operace co se mám porvést"
+        return status;
     }
     }

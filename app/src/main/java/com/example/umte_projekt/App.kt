@@ -1,9 +1,6 @@
 package com.example.umte_projekt
 import android.app.Application
-import com.example.umte_projekt.di.dataModuleDepot
-import com.example.umte_projekt.di.dataModuleLogin
-import com.example.umte_projekt.di.uiModuleDepot
-import com.example.umte_projekt.di.uiModuleLogin
+import com.example.umte_projekt.di.*
 
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -20,7 +17,7 @@ class App : Application() {
 
         startKoin {
             androidContext(applicationContext)
-            modules(listOf(uiModuleLogin, dataModuleLogin, uiModuleDepot, dataModuleDepot))
+            modules(listOf(uiModuleLogin, dataModuleLogin, uiModuleDepot, dataModuleDepot, uiModuleHomeDepot, uiModuleDepotList))
 
         }
 /*

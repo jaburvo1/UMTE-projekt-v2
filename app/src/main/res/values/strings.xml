@@ -18,6 +18,9 @@
     <string name="form_screen_select__operationType_removeItemPiece">Vyskladni díl</string>
     <string name="form_screen_btnClear">Vymaž</string>
     <string name="form_screen_btnOk">OK</string>
+    <string name="home_depot_screen_btnFromDepot">Formulář</string>
+    <string name="home_depot_screen_btnListParts">Výpis skladu</string>
+    <string name="btnLogOut">Odhlásit</string>
 
 
 

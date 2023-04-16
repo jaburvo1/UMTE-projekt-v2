@@ -1,8 +1,6 @@
 package com.example.umte_projekt.ui.async
 
-import android.view.Choreographer.VsyncCallback
 import com.example.umte_projekt.base.BaseViewModel
-import com.example.umte_projekt.data.model.response.LoginUser
 import com.example.umte_projekt.data.remote.service.LoginServiceAPI
 import com.example.umte_projekt.data.repository.LoginRepoziotry
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +14,7 @@ class DepotHomeScreenModel(
 ): BaseViewModel()
 {
 
-    private val _loginUser = MutableStateFlow<Int>(0)
+    private val _loginUser = MutableStateFlow<Int>(2)
     val loginUser = _loginUser.asStateFlow()
 
     /* init {

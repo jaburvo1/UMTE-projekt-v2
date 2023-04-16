@@ -3,8 +3,10 @@ import com.example.umte_projekt.data.remote.service.DepotServiceAPI
 import com.example.umte_projekt.data.remote.service.LoginServiceAPI
 import com.example.umte_projekt.data.repository.DepotRepozitory
 import com.example.umte_projekt.data.repository.LoginRepoziotry
+import com.example.umte_projekt.ui.async.DepotHomeScreenModel
 import com.example.umte_projekt.ui.async.FormDepotScreenModel
 import com.example.umte_projekt.ui.async.FormLoginScreenModel
+import com.example.umte_projekt.ui.async.PartLazyListScreenModel
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
@@ -36,10 +38,15 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 
         //viewModel { DatabaseViewModel(get()) }
     }
+val uiModuleHomeDepot = module {
+    viewModel { return@viewModel DepotHomeScreenModel(get(),get()) }
+}
 
     val uiModuleDepot = module {
-    viewModel { return@viewModel FormDepotScreenModel(get()) }
-
+        viewModel { return@viewModel FormDepotScreenModel(get()) }
+    }
+        val uiModuleDepotList  = module {
+        viewModel { return@viewModel PartLazyListScreenModel(get()) }
 
     //viewModel { DatabaseViewModel(get()) }
 }

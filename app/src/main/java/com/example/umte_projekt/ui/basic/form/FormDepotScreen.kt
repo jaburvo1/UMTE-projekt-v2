@@ -9,10 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,6 +44,8 @@ fun FormDepotScreen(
 
     val operatinoTypeSelection = remember { mutableStateOf("") }
     var openDialogForm = remember { mutableStateOf(false)  }
+    var openDialogTypeOperation = remember { mutableStateOf(false)  }
+    openDialogTypeOperation.value = false
 
 
 
@@ -66,6 +65,7 @@ fun FormDepotScreen(
         )
     }
     ) {
+
         if (openDialogForm.value == true) {
             AlertDialog(
                 onDismissRequest = {
@@ -88,6 +88,12 @@ fun FormDepotScreen(
 
                         onClick = {
                             openDialogForm.value = !openDialogForm.value
+                            inputNamePart.value =""
+                            inputTypePart.value =""
+                            inputSubtypePart.value =""
+                            inputParametrsPart.value =""
+                            inputManufacturePart.value =""
+                            inputCountPart.value =""
 
 
                         }) {
@@ -204,6 +210,7 @@ fun FormDepotScreen(
                 RadioText(label = context.getString(TypeOperation.AddItemPiece.nameRes), operatinoTypeSelection)
                 RadioText(label = context.getString(TypeOperation.RemoveItemPiece.nameRes), operatinoTypeSelection)
 
+
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -211,7 +218,7 @@ fun FormDepotScreen(
         Row() {
 
 
-            Button(onClick = { sendData(context, viewModel, inputNamePart.value, inputCountPart.value, inputTypePart.value, inputSubtypePart.value, inputParametrsPart.value, inputManufacturePart.value)
+            Button(onClick = { sendData(context, viewModel, inputNamePart.value, inputCountPart.value, inputTypePart.value, inputSubtypePart.value, inputParametrsPart.value, inputManufacturePart.value,operatinoTypeSelection)
             openDialogForm.value=true}) {
                 Text(text = context.getString(R.string.form_screen_btnOk))
             }
@@ -242,13 +249,37 @@ fun sendData(
     typePart: String,
     subtpyPart: String,
     parametrsPart: String,
-    manufacturePart: String
+    manufacturePart: String,
+    operatinoTypeSelection: MutableState<String>
 ) {
-// výber z radioButon
-    val countPart = countPartString.toInt()
-   //viewModel.fetchAddItemPiece(namePart, countPart )
-    //viewModel.fetchRemoveItemPiece(namePart, countPart)
-    viewModel.fetchAddItem(typePart,subtpyPart,namePart,parametrsPart,manufacturePart,countPart)
+    var countPart:Int
+    if(countPartString!="")
+    {
+        countPart = countPartString.toInt()
+    }
+    else{
+        countPart = 0
+    }
+
+
+    if(operatinoTypeSelection.value ==context.getString(R.string.form_screen_select_operationType_addItem)){
+        viewModel.fetchAddItem(typePart,subtpyPart,namePart,parametrsPart,manufacturePart,countPart)
+    }
+    else{
+        if(operatinoTypeSelection.value ==context.getString(R.string.form_screen_select_operationType_addItemPiece))
+        {
+            viewModel.fetchAddItemPiece(namePart, countPart )
+        }
+        else{
+            if(operatinoTypeSelection.value ==context.getString(R.string.form_screen_select__operationType_removeItemPiece)){
+                viewModel.fetchRemoveItemPiece(namePart, countPart)
+            }
+            else{
+                viewModel.fetchDefault()
+
+            }
+        }
+    }
 
 
 

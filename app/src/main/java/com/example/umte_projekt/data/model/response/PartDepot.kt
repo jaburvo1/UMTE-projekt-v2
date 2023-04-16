@@ -26,3 +26,8 @@ data class AllPartDepot(
     val countPart: Int
 
 )
+@kotlinx.serialization.Serializable
+data class ALlPartsDepot(
+    @SerialName("partListJson")
+    val parts: List<ALlPartsDepot>
+)

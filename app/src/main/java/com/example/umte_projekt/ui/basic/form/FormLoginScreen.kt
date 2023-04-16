@@ -22,6 +22,7 @@ import org.koin.androidx.compose.getViewModel
 
 
 
+
 @Composable
  fun FormLoginScreen (
     viewModel: FormLoginScreenModel = getViewModel()
@@ -40,8 +41,8 @@ import org.koin.androidx.compose.getViewModel
 
     if(userRolePom.value == 2){
 
-        context.startActivity(Intent(context, FormDepotActivity::class.java))
-        //context.startActivity(Intent(context, DepotHomeAcitvity::class.java))
+        //context.startActivity(Intent(context, FormDDepotHomeAcitvityepotActivity::class.java))
+        context.startActivity(Intent(context, DepotHomeAcitvity::class.java))
 
     }
     else{

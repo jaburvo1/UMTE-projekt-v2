@@ -28,9 +28,9 @@ interface DepotServiceAPI {
 
     ): Map<String, String>?
 
-    @GET("/sklad")
+    @GET("/depotPartsAppp")
     suspend fun fetchDepot(
 
-    ):List<AllPartDepot>?//???
+    ): AllPartDepot?
 
 }

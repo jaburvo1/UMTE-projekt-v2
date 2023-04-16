@@ -20,18 +20,10 @@ class FormDepotScreenModel(
                      countPart:Int) = launch(
         block = {
             try {
-                if (namePart.equals("")) {
 
-                } else {
-                    if (countPart <= 0) {
-
-                    } else {
                         depotRepoziotry.addItemRepozitory(typePart, subtypePart, namePart, parametrsPart,manufacturePart, countPart ).also { it ->
                             _depotRepoziotry.emit(it)
                         }
-
-                    }
-                }
             }catch (ce: CancellationException) {
                 // You can ignore or log this exception
             } catch (e: Exception) {
@@ -44,18 +36,10 @@ class FormDepotScreenModel(
     fun fetchAddItemPiece(namePart:String, countPart:Int) = launch(
         block = {
             try {
-            if (namePart.equals("")) {
 
-            } else {
-                if (countPart <= 0) {
-
-                } else { 
                     depotRepoziotry.addItemPieceRepozitory(namePart, countPart).also { it ->
                        _depotRepoziotry.emit(it)
                     }
-
-                }
-            }
         }catch (ce: CancellationException) {
         // You can ignore or log this exception
     } catch (e: Exception) {
@@ -69,20 +53,22 @@ class FormDepotScreenModel(
             fun fetchRemoveItemPiece(namePart:String, countPart:Int) = launch(
                 block = {
 
-                    if (namePart.equals("")) {
 
-                    } else {
-                        if (countPart <= 0) {
-
-                        } else {
                             depotRepoziotry.removeItemPieceRepozitory(namePart, countPart).also {
                             _depotRepoziotry.emit(it)
                             }
-
-                        }
                     }
-                }
             )
+
+    fun fetchDefault()=launch(
+        block = {
+
+
+            depotRepoziotry.default().also {
+                _depotRepoziotry.emit(it)
+            }
+        }
+    )
 }
 
 

@@ -30,6 +30,11 @@
         </activity>
 
         <activity
+            android:name="com.example.umte_projekt.ui.basic.form.DepotHomeAcitvity"
+            android:exported="false"
+            android:theme="@style/Theme.UMTEprojekt"/>
+
+        <activity
             android:name="com.example.umte_projekt.ui.basic.form.FormLoginActivity"
             android:exported="false"
             android:theme="@style/Theme.UMTEprojekt"/>
