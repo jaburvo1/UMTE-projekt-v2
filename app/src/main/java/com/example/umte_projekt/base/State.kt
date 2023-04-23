@@ -1,17 +1,17 @@
 package com.example.umte_projekt.base
 
 
-sealed interface State {
+sealed interface State<T> {
 
-    object None: State
+    object None: State<Any?>
 
-    object Loading: State
+    object Loading: State<Any?>
 
-    class Success(val any: Any? = null): State
+    class Success(val any: Any? = null): State<Any?>
 
     class Failure(
         val throwable: Throwable
-    ): State
+    ): State<Any?>
 
 }
 

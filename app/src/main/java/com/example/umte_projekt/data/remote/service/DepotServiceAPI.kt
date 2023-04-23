@@ -1,6 +1,5 @@
 package com.example.umte_projekt.data.remote.service
 
-import com.example.umte_projekt.data.model.response.AllPartDepot
 import retrofit2.http.*
 
 interface DepotServiceAPI {
@@ -28,9 +27,9 @@ interface DepotServiceAPI {
 
     ): Map<String, String>?
 
-    @GET("/depotPartsAppp")
+    @GET("/depotPartsApp")
     suspend fun fetchDepot(
 
-    ): AllPartDepot?
+    ): String?
 
 }

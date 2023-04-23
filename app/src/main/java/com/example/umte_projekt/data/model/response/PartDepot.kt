@@ -1,6 +1,9 @@
 package com.example.umte_projekt.data.model.response
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.JsonTransformingSerializer
 
 
 @kotlinx.serialization.Serializable
@@ -12,6 +15,8 @@ data class PartDepotStatus (
 
 @kotlinx.serialization.Serializable
 data class AllPartDepot(
+    @SerialName("id")
+    val id :Int,
     @SerialName("namePart")
     val  namePart: String,
     @SerialName("typePart")
@@ -23,11 +28,22 @@ data class AllPartDepot(
     @SerialName("manufacturePart")
     val manufacturePart: String,
     @SerialName("countPart")
-    val countPart: Int
+    val countPart: Int,
+    @SerialName("idSkald")
+    val idSklad: Int
 
 )
+/*
 @kotlinx.serialization.Serializable
 data class ALlPartsDepot(
     @SerialName("partListJson")
     val parts: List<ALlPartsDepot>
 )
+*/
+@Serializable
+data class ALlPartsDepot(
+    @Serializable(with = PartListSerializer::class)
+    val parts : List<AllPartDepot>
+)
+
+object  PartListSerializer  :  JsonTransformingSerializer<List<AllPartDepot>>( ListSerializer ( AllPartDepot.serializer ()))

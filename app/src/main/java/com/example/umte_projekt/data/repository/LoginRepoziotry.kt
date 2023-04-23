@@ -16,7 +16,7 @@ class LoginRepoziotry(
 
     @SuppressLint("SuspiciousIndentation")
     suspend fun loginRepozitory(email: String, password: String): Int {
-        if ((email.equals("")) || (password.equals("")) || (email.equals(" ")) || (password.equals(" "))) {
+        if ((email == "") || (password == "") || (email == " ") || (password == " ")) {
             role = -2;
         } else {
             val loginUserRespponse = fetchLogin(email, password)

@@ -1,7 +1,6 @@
 package com.example.umte_projekt.ui.basic.form
 
 
-import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +14,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.DialogProperties
 import com.example.umte_projekt.ui.async.FormLoginScreenModel
 import cz.uhk.umte.R
 import org.koin.androidx.compose.getViewModel
@@ -33,8 +31,8 @@ import org.koin.androidx.compose.getViewModel
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }
     val userRolePom = viewModel.loginUser.collectAsState()
 
-    var openDialog1 = remember { mutableStateOf(false)  }
-    var openDialog2 = remember { mutableStateOf(false)  }
+    val openDialog1 = remember { mutableStateOf(false)  }
+    val openDialog2 = remember { mutableStateOf(false)  }
 
     openDialog1.value = false
     openDialog2.value = false
@@ -70,7 +68,7 @@ import org.koin.androidx.compose.getViewModel
         }
         }
 
-    if (openDialog1.value == true) {
+    if (openDialog1.value) {
         AlertDialog(
             onDismissRequest = {
                 // Dismiss the dialog when the user clicks outside the dialog or on the back
@@ -79,7 +77,7 @@ import org.koin.androidx.compose.getViewModel
 
 
                openDialog1.value = false
-               val properties = DialogProperties()
+
             },
             title = {
                 Text(text = "Chyba přihlášení")
@@ -101,7 +99,7 @@ import org.koin.androidx.compose.getViewModel
             }
         )
     }
-    if (openDialog2.value==true) {
+    if (openDialog2.value) {
         AlertDialog(
             onDismissRequest = {
                 // Dismiss the dialog when the user clicks outside the dialog or on the back
@@ -110,7 +108,7 @@ import org.koin.androidx.compose.getViewModel
 
 
                 openDialog2.value = false
-                val properties = DialogProperties()
+
             },
             title = {
                 Text(text = "Chyba přihlášení")
@@ -171,7 +169,7 @@ import org.koin.androidx.compose.getViewModel
         )
 
 
-        Button(onClick = { btnLogin(inputEmail.value,inputPassword.value, context, viewModel) }) {
+        Button(onClick = { btnLogin(inputEmail.value, inputPassword.value, viewModel) }) {
             Text(text = context.getString(R.string.form_screen_btnLogin))
         }
 
@@ -188,7 +186,7 @@ import org.koin.androidx.compose.getViewModel
 
 }
 
-fun btnLogin(email: String, password: String, context: Context,  viewModel:FormLoginScreenModel) {
+fun btnLogin(email: String, password: String, viewModel: FormLoginScreenModel) {
 
    viewModel.fetchLoginUser(email, password)
 

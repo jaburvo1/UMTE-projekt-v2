@@ -1,4 +1,4 @@
-package com.example.umte_projekt.ui
+package com.example.umte_projekt.ui.basic.form
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Column
@@ -11,8 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.example.umte_projekt.ui.async.DepotHomeScreenModel
-import com.example.umte_projekt.ui.basic.form.FormDepotActivity
-import com.example.umte_projekt.ui.basic.form.FormLoginActivity
 import com.example.umte_projekt.ui.basic.lazylist.PartLazyListActivity
 import cz.uhk.umte.R
 import org.koin.androidx.compose.getViewModel
@@ -37,7 +35,7 @@ fun DepotHomeScreen(
         }
     }
 
-    if ( openDialogLogout.value == true) {
+    if (openDialogLogout.value) {
         AlertDialog(
             onDismissRequest = {
                 // Dismiss the dialog when the user clicks outside the dialog or on the back
@@ -78,7 +76,7 @@ fun DepotHomeScreen(
             Text(text = context.getString(R.string.home_depot_screen_btnListParts))
         }
 
-        Button(onClick = {btnLogout(viewModel)}) {
+        Button(onClick = { btnLogout(viewModel) }) {
             Text(text = context.getString(R.string.btnLogOut))
         }
 

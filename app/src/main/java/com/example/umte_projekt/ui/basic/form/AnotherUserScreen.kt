@@ -1,6 +1,5 @@
 package com.example.umte_projekt.ui.basic.form
 
-import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,13 +34,13 @@ fun AnotherUserScreen(
        openDialogLogout.value = false
    }
    else{
-       if((userRolePom.value==3)||(userRolePom.value==1))
+        if((userRolePom.value==3)||(userRolePom.value==1))
            openDialogLogout.value = false
        else{
            openDialogLogout.value = true
        }
    }
-    if ( openDialogLogout.value == true) {
+    if (openDialogLogout.value) {
         AlertDialog(
             onDismissRequest = {
                 // Dismiss the dialog when the user clicks outside the dialog or on the back
@@ -81,7 +80,7 @@ fun AnotherUserScreen(
     ) {
         Text(text = "Pro uživatele v této roli není aplikace iplementována")
 
-        Button(onClick= {  btnLogoutAnodher(context, viewModel)})
+        Button(onClick= {  btnLogoutAnodher(viewModel)})
         {
             Icon(Icons.Default.Lock, contentDescription = "")
             Text(text = "Odhlásit")
@@ -90,6 +89,6 @@ fun AnotherUserScreen(
 }
 
 
-fun btnLogoutAnodher(context: Context, viewModel: AnotherUserScreenModel) {
+fun btnLogoutAnodher(viewModel: AnotherUserScreenModel) {
  viewModel.fetchLogoutUser()
 }

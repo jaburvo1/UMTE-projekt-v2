@@ -1,5 +1,6 @@
 package com.example.umte_projekt.data.repository
 
+
 import com.example.umte_projekt.data.model.response.AllPartDepot
 import com.example.umte_projekt.data.remote.service.DepotServiceAPI
 import kotlinx.serialization.decodeFromString
@@ -11,8 +12,8 @@ class DepotRepozitory(
   suspend  fun fetchAddItem(typePart:String, subtypePart:String, namePart:String, parametrsPart:String,
                             manufacturePart:String, countPart:Int): String{
        //return depotService.fetchAddItem(typePart, subtypePart, namePart, parametrsPart, manufacturePart, countPart)
-      var statusTexts : Map<String, String>
-      var statusText :String
+      val statusTexts : Map<String, String>
+      val statusText :String
       val response = depotService.fetchAddItem(typePart, subtypePart, namePart, parametrsPart, manufacturePart, countPart)
       if(response!=null) {
           statusTexts = response
@@ -27,8 +28,8 @@ class DepotRepozitory(
     }
     suspend fun fetchAddItemPiece(namePart:String, countPart:Int) : String {
        //return depotService.fetchAddItemPiece(namePart, countPart)
-        var statusTexts : Map<String, String>
-        var statusText :String
+        val statusTexts : Map<String, String>
+        val statusText :String
         val response = depotService.fetchAddItemPiece(namePart, countPart)
         if(response!=null) {
             statusTexts = response
@@ -43,8 +44,8 @@ class DepotRepozitory(
     }
     suspend fun fetchRemoveItemPiece(namePart:String, countPart:Int): String {
         //return depotService.fetchRemoveItemPiece(namePart, countPart)
-       var statusTexts : Map<String, String>
-       var statusText :String
+       val statusTexts : Map<String, String>
+       val statusText :String
        val response = depotService.fetchRemoveItemPiece(namePart, countPart)
        if(response!=null) {
            statusTexts = response
@@ -56,26 +57,32 @@ class DepotRepozitory(
     }
         return statusText
     }
-    suspend fun fetchDepot(): List<AllPartDepot> {
-       val partsListPomString: AllPartDepot? = depotService.fetchDepot()
-        var parts = ArrayList<AllPartDepot>()
-        if(partsListPomString!=null) {
-            parts = Json.decodeFromString<List<AllPartDepot>>(partsListPomString.toString()) as ArrayList<AllPartDepot>
+    suspend fun fetchDepot():ArrayList<String> {
+       val partsListJson = depotService.fetchDepot()
+        val parts: java.util.ArrayList<AllPartDepot>
+        val partsDepotString :ArrayList<String> = ArrayList()
+        if(partsListJson!=null) {
+            parts = Json.decodeFromString<List<AllPartDepot>>(partsListJson) as ArrayList<AllPartDepot>
+           for ( part in parts){
+                partsDepotString.add(part.toString())
+            }
         }
-      /*  else
+
+        /*else
         {
             parts
 
 
         }*/
-        return parts
+        //return parts
+        return partsDepotString
     }
 
     suspend fun addItemRepozitory(typePart:String, subtypePart:String, namePart:String, parametrsPart:String,
                                   manufacturePart:String, countPart:Int): String?
-    { var status:String
-        if((typePart.equals(""))||(subtypePart.equals(""))||(namePart.equals(""))||(parametrsPart.equals(""))||
-            (manufacturePart.equals(""))||(countPart<=0)){
+    { val status:String
+        if((typePart == "")||(subtypePart == "")||(namePart == "")||(parametrsPart == "")||
+            (manufacturePart == "")||(countPart<=0)){
             status = "Nevyplněny všechny údaje po vložení nového druhu dílu"
         }
         else{
@@ -84,7 +91,7 @@ class DepotRepozitory(
        return status
     }
     suspend fun addItemPieceRepozitory(namePart: String, countPart: Int): String?{
-        var status:String
+        val status:String
         if((namePart=="")||(namePart==" ")||(countPart<=0))
             {
             status = "Nevyplnení nazev dílu, nebo počet kusu"
@@ -96,7 +103,7 @@ class DepotRepozitory(
         return status
     }
     suspend fun removeItemPieceRepozitory(namePart: String, countPart: Int):String?{
-        var status:String
+        val status:String
         if((namePart=="")||(namePart==" ")||(countPart<=0))
         {
             status = "Nevyplnení nazev dílu, nebo počet kusu"
@@ -111,9 +118,9 @@ class DepotRepozitory(
     suspend fun depotPart(){
         fetchDepot()
     }
-     fun default():String?{
+     fun default():String{
 
-       var status = "Nevybrán typ operace co se mám porvést"
+       val status = "Nevybrán typ operace co se mám porvést"
         return status;
     }
     }

@@ -11,15 +11,25 @@ class PartLazyListScreenModel(
     private val depotRepoziotry: DepotRepozitory
 
 ) : BaseViewModel() {
-    private val _depotRepoziotry = MutableStateFlow<String?>("")
-    val depot = _depotRepoziotry.asStateFlow()
+    private val _depotFlow = MutableStateFlow<List<String>?>(emptyList())
+    val depot = _depotFlow.asStateFlow()
+
+
+
+
+
+
+
+
 
     fun fetchDepotParts() = launch(
         block = {
             try {
-                depotRepoziotry.fetchDepot()
+
+                _depotFlow.emit(depotRepoziotry.fetchDepot())
             }catch (ce: CancellationException) {
                 // You can ignore or log this exception
+               // val test = 1
             } catch (e: Exception) {
                 // Here it's better to at least log the exception
                 Log.e("TAG","Coroutine error", e)

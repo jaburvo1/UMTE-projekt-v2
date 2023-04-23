@@ -11,12 +11,12 @@ abstract class BaseViewModel : ViewModel() {
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.Default + job)
 
-    private val _state = MutableStateFlow<State>(State.None)
+    private val _state = MutableStateFlow<State<Any?>>(State.None)
     val state = _state.asStateFlow()
 
     protected fun <Result> launch(
         onError: ((Throwable) -> Unit)? = null,
-        state: MutableStateFlow<State>? = _state,
+        state: MutableStateFlow<State<Any?>>? = _state,
         block: (suspend CoroutineScope.() -> Result)
     ) = scope.launch(throwableHandler<Result>(onError, state)) {
 
@@ -32,7 +32,7 @@ abstract class BaseViewModel : ViewModel() {
 
     private fun <Result> throwableHandler(
         onError: ((Throwable) -> Unit)? = null,
-        state: MutableStateFlow<State>?,
+        state: MutableStateFlow<State<Any?>>?,
     ) = CoroutineExceptionHandler { _, throwable ->
         onError?.invoke(throwable)
         state?.tryEmit(

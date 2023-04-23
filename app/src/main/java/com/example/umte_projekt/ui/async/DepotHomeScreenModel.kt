@@ -1,7 +1,6 @@
 package com.example.umte_projekt.ui.async
 
 import com.example.umte_projekt.base.BaseViewModel
-import com.example.umte_projekt.data.remote.service.LoginServiceAPI
 import com.example.umte_projekt.data.repository.LoginRepoziotry
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class DepotHomeScreenModel(
     // private val email: String,
     //private val password: String,
-    private val spaceLoginServiceAPI: LoginServiceAPI,
+    //private val spaceLoginServiceAPI: LoginServiceAPI,
     private val loginRepoziotry: LoginRepoziotry
 ): BaseViewModel()
 {
