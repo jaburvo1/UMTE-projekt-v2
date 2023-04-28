@@ -11,16 +11,8 @@ class PartLazyListScreenModel(
     private val depotRepoziotry: DepotRepozitory
 
 ) : BaseViewModel() {
-    private val _depotFlow = MutableStateFlow<List<String>?>(emptyList())
+    private val _depotFlow = MutableStateFlow<List<String>>(emptyList())
     val depot = _depotFlow.asStateFlow()
-
-
-
-
-
-
-
-
 
     fun fetchDepotParts() = launch(
         block = {

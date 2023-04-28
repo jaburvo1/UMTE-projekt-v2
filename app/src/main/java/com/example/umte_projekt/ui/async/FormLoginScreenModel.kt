@@ -24,9 +24,6 @@ class FormLoginScreenModel(
 
         block = {
             try {
-
-//zde padá do e: Exception
-
                loginRepoziotry.loginRepozitory(email, password).also {
                    _loginUser.emit(it) //zde spadne
                 }

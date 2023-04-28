@@ -8,8 +8,10 @@ import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.umte_projekt.base.State
 import com.example.umte_projekt.ui.async.PartLazyListScreenModel
@@ -20,9 +22,14 @@ import org.koin.androidx.compose.getViewModel
 fun PartLazyListScreen(
     viewModel: PartLazyListScreenModel = getViewModel(),
 ) {
+
+    val context = LocalContext.current
     val parts =  viewModel.depot.collectAsState()
     val state = viewModel.state.collectAsState()
-    Text(parts.value.toString())
+    LaunchedEffect(Unit) {
+        viewModel.fetchDepotParts();
+    }
+
     when (val result = state.value) {
         State.None, State.Loading -> {
             CircularProgressIndicator()
@@ -51,6 +58,7 @@ fun PartLazyListScreen(
 fun PartsView(
     parts: androidx.compose.runtime.State<List<String>>,
 ) {
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -69,7 +77,6 @@ fun PartsView(
                     ) {
                         Text(text = part)
                         Spacer(modifier = Modifier.width(4.dp))
-                        //Text(text = "Flight num: ${rocketLaunch.flightNumber}")
                     }
                 }
             }
@@ -77,6 +84,7 @@ fun PartsView(
     }
 
 }
+
 
 
 

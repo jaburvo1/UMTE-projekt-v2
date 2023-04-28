@@ -9,6 +9,4 @@ import com.example.umte_projekt.ui.basic.form.FormLoginActivity
 fun MainScreen(){
     val context = LocalContext.current
     context.startActivity(Intent(context, FormLoginActivity::class.java))
-    //context.startActivity(Intent(context, FormDepotActivity::class.java))
-
 }

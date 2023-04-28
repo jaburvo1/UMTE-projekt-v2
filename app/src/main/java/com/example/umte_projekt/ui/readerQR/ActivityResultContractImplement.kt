@@ -6,8 +6,7 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 
 class ActivityResultContractImplement : ActivityResultContract<String, String?>() {
-     val DATA = "data"
-     val INPUT_DATA = "input_data"
+
     override fun createIntent(context: Context, input: String): Intent {
         val intent = Intent(context, BarcodeAnalyserActivity::class.java)
         intent.putExtra(INPUT_DATA, input)
@@ -16,11 +15,14 @@ class ActivityResultContractImplement : ActivityResultContract<String, String?>(
 
     override fun parseResult(resultCode: Int, intent: Intent?): String? {
         return when (resultCode) {
-            //Transforming our result to required format before returning it
             Activity.RESULT_OK -> intent?.getStringExtra(DATA)
             else -> null
         }
     }
 
+    companion object{
+        val DATA = "data"
+        val INPUT_DATA = "input_data"
+    }
 
 }

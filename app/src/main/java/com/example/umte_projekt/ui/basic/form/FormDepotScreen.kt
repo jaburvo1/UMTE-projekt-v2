@@ -4,14 +4,10 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -19,13 +15,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -62,22 +56,22 @@ fun FormDepotScreen(
     val scrollState = rememberScrollState()
     openDialogTypeOperation.value = false
 
-    val permissionGranted = remember { mutableStateOf(isNotificationGranted(context)) }
+    val contract = ActivityResultContractImplement()
+    var launcher = rememberLauncherForActivityResult(contract = contract){
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isGranted ->
-            if (isGranted) {
-                Toast.makeText(context, "Povoleni udeleno", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, "Povoleni NEUDELENO", Toast.LENGTH_SHORT).show()
-            }
-
-            permissionGranted.value = isGranted
+        if(it==null) {
+            Toast.makeText(context,  "chyba skenovani QR kodu",Toast.LENGTH_SHORT).show()
         }
-    )
-
-   requestCameraPermission(context, launcher)
+        else {
+            var splitRezult = it.split(";")
+            inputNamePart.value = splitRezult[1]
+            inputTypePart.value = splitRezult[3]
+            inputSubtypePart.value = splitRezult[5]
+            inputParametrsPart.value = splitRezult[7]
+            inputManufacturePart.value = splitRezult[9]
+            inputCountPart.value = splitRezult[11]
+        }
+    }
 
 
     Scaffold(topBar = {
@@ -136,7 +130,8 @@ fun FormDepotScreen(
         
        Column(// or whatever your parent composable is
             modifier = Modifier
-                .verticalScroll(rememberScrollState()).fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
         ) {
             Column(
                 modifier = Modifier
@@ -148,11 +143,7 @@ fun FormDepotScreen(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Default.Home, contentDescription = "")
-                    Image(
-                        painter = painterResource(R.drawable.ic_launcher_foreground),
-                        contentDescription = ""
-                    )
+
                     Text(
                         text = context.getString(R.string.form_screen_formDepot), style = TextStyle(
                             fontWeight = FontWeight.Normal,
@@ -161,8 +152,7 @@ fun FormDepotScreen(
                         )
                     )
                 }
-                
-                Spacer(modifier = Modifier.height(500.dp))
+
 
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
@@ -255,13 +245,14 @@ fun FormDepotScreen(
                         label = context.getString(TypeOperation.AddItemPiece.nameRes),
                         operatinoTypeSelection
                     )
-                    RadioText(
-                        label = context.getString(TypeOperation.RemoveItemPiece.nameRes),
-                        operatinoTypeSelection
-                    )
+
 
 
                 }
+                RadioText(
+                    label = context.getString(TypeOperation.RemoveItemPiece.nameRes),
+                    operatinoTypeSelection
+                )
 
                 Spacer(modifier = Modifier.weight(1f))
 
@@ -285,6 +276,8 @@ fun FormDepotScreen(
                         Text(text = context.getString(R.string.form_screen_btnOk))
                     }
 
+                    Spacer(modifier = Modifier.width(8.dp))
+
                     Button(onClick = {
                         inputNamePart.value = ""
                         inputTypePart.value = ""
@@ -295,8 +288,10 @@ fun FormDepotScreen(
                     }) {
                         Text(text = context.getString(R.string.form_screen_btnClear))
                     }
+                    Spacer(modifier = Modifier.width(8.dp))
 
-                    Button(onClick = { btnReadQR(context) }) {
+
+                    Button(onClick = { btnReadQR(context, launcher, contract) }) {
                         Text(text = context.getString(R.string.form_screen_btnQRreader))
                     }
 
@@ -310,37 +305,36 @@ fun FormDepotScreen(
 
 fun requestCameraPermission(context: Context, launcher: ManagedActivityResultLauncher<String, Boolean>)
     {
-        if (isNotificationGranted(context)) return
+        if (isCameraPermisionGranted(context)) return
 
         launcher.launch(Manifest.permission.CAMERA)
     }
 
 
-fun isNotificationGranted(context: Context): Boolean {
-           return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-               ActivityCompat.checkSelfPermission(
+fun isCameraPermisionGranted(context: Context): Boolean {
+          return     ActivityCompat.checkSelfPermission(
                  context,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-           } else {
-               TODO("VERSION.SDK_INT < TIRAMISU")
-           }
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED // zde predelat na povoleni kamery
+
 }
 
-fun btnReadQR(context: Context): ArrayList<String> {
-   val activityResult  = ActivityResultContractImplement()
- val intent: Intent = activityResult.createIntent(context,"")
-  val textString: String? =   activityResult.parseResult(1, intent)
 
-   var  partValues = ArrayList<String>()
-    if(textString!=null){
-            partValues = textString.split(";") as ArrayList<String>
+fun btnReadQR(context: Context, launcher:ManagedActivityResultLauncher<String, String?>, contract: ActivityResultContractImplement): ArrayList<String>  {
+    var listRezult: ArrayList<String> = ArrayList<String>()
+    val permison =isCameraPermisionGranted(context)
+    if(permison){
+
+        launcher.launch("")
+
     }
     else{
-            partValues.toMutableList().add("Chyba nacteni dat")
-
+        val errorPermison = "Není povolen pristup ke kamare telefonu"
+        listRezult.add(errorPermison)
     }
-    return partValues
+
+   return listRezult;
+
 }
 
 

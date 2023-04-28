@@ -1,7 +1,9 @@
 package com.example.umte_projekt.ui.readerQR
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -41,7 +43,12 @@ fun  BarcodeAnalyserScreen(){
                 .build()
                 .also {
                     it.setAnalyzer(cameraExecutor, BarcodeAnalyser{
-                        Toast.makeText(context, "Barcode found", Toast.LENGTH_SHORT).show()
+                        val contextActivity = context as Activity
+                        val rezultIntent = Intent().apply {
+                            putExtra(ActivityResultContractImplement.DATA,it)
+                        }
+                        contextActivity.setResult(RESULT_OK,rezultIntent)
+                        contextActivity.finish()
                     })
                 }
 

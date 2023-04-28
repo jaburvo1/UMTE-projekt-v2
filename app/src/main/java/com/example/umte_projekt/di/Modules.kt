@@ -13,30 +13,12 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
-
-/*val databaseModule = module {
-
-    single {
-        Room.databaseBuilder(
-            context = androidApplication(),
-            klass = AppDatabase::class.java,
-            name = AppDatabase.Name
-        ).build()
-    }
-
-   single { get<AppDatabase>().noteDao() }*
-}
-*/
-
-
     val uiModuleLogin = module {
         viewModel { return@viewModel FormLoginScreenModel(get()) }
 
-
-        //viewModel { DatabaseViewModel(get()) }
     }
 val uiModuleHomeDepot = module {
-    viewModel { return@viewModel DepotHomeScreenModel(get(),get()) }
+    viewModel { return@viewModel DepotHomeScreenModel(get()) }
 }
 
     val uiModuleDepot = module {

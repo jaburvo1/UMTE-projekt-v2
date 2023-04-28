@@ -90,9 +90,6 @@ import org.koin.androidx.compose.getViewModel
 
                     onClick = {
                         viewModel.setRole(0);
-                        //openDialog1.value = !openDialog1.value
-
-
                     }) {
                     Text("ok")
                 }
@@ -102,9 +99,7 @@ import org.koin.androidx.compose.getViewModel
     if (openDialog2.value) {
         AlertDialog(
             onDismissRequest = {
-                // Dismiss the dialog when the user clicks outside the dialog or on the back
-                // button. If you want to disable that functionality, simply use an empty
-                // onCloseRequest.
+
 
 
                 openDialog2.value = false

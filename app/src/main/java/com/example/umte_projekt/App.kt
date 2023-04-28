@@ -7,11 +7,6 @@ import org.koin.core.context.startKoin
 
 
 class App : Application() {
-
-   /*private var listOfModules :Module = module {
-       single { LoginServiceAPI()}
-   }*/
-
     override fun onCreate() {
         super.onCreate()
 
@@ -20,17 +15,7 @@ class App : Application() {
             modules(listOf(uiModuleLogin, dataModuleLogin, uiModuleDepot, dataModuleDepot, uiModuleHomeDepot, uiModuleDepotList, uiModuleAnotherUser))
 
         }
-/*
-        startKoin {
-            androidLogger()
-            androidContext(androidContext = this@App)
 
-            modules(
-                listOfModules
-            )
-        }
-
- */
     }
 
 }

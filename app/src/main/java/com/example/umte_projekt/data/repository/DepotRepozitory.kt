@@ -43,7 +43,6 @@ class DepotRepozitory(
 
     }
     suspend fun fetchRemoveItemPiece(namePart:String, countPart:Int): String {
-        //return depotService.fetchRemoveItemPiece(namePart, countPart)
        val statusTexts : Map<String, String>
        val statusText :String
        val response = depotService.fetchRemoveItemPiece(namePart, countPart)
@@ -64,17 +63,10 @@ class DepotRepozitory(
         if(partsListJson!=null) {
             parts = Json.decodeFromString<List<AllPartDepot>>(partsListJson) as ArrayList<AllPartDepot>
            for ( part in parts){
-                partsDepotString.add(part.toString())
+               val partString = "nazev dilu: "+part.namePart+" druh dilu: "+part.typePart+" typ dilu: "+part.subtypePart +" parametry dilu: "+ part.parametrsPart +" vyrobce dilu: "+ part.manufacturePart +" pocet diliu: "+part.countPart
+                partsDepotString.add(partString)
             }
         }
-
-        /*else
-        {
-            parts
-
-
-        }*/
-        //return parts
         return partsDepotString
     }
 
@@ -111,7 +103,6 @@ class DepotRepozitory(
         else{
             status =  fetchRemoveItemPiece(namePart,countPart)
         }
-              //return  fetchRemoveItemPiece(namePart,countPart).toString()
         return status
 
     }

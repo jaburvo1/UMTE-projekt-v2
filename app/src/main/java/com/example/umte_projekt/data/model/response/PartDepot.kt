@@ -33,13 +33,7 @@ data class AllPartDepot(
     val idSklad: Int
 
 )
-/*
-@kotlinx.serialization.Serializable
-data class ALlPartsDepot(
-    @SerialName("partListJson")
-    val parts: List<ALlPartsDepot>
-)
-*/
+
 @Serializable
 data class ALlPartsDepot(
     @Serializable(with = PartListSerializer::class)
