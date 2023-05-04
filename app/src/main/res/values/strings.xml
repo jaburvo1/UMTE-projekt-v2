@@ -22,6 +22,7 @@
     <string name="home_depot_screen_btnListParts">Výpis skladu</string>
     <string name="btnLogOut">Odhlásit</string>
     <string name="form_screen_btnQRreader">Načti QR kód</string>
+    <string name="form_screen_lazyList">Výpis skladu</string>
 
 
 </resources>

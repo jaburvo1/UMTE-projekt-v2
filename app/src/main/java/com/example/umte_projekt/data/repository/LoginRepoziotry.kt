@@ -23,6 +23,9 @@ class LoginRepoziotry(
             if (loginUserRespponse != null) {
                 role = loginUserRespponse
             }
+            else{
+                role -1;
+            }
 
         }
         return role

@@ -199,7 +199,7 @@ fun FormDepotScreen(
                         inputParametrsPart.value = text
                     },
                     label = {
-                        Text(text = context.getString(R.string.form_screen_typePart))
+                        Text(text = context.getString(R.string.form_screen_parametrsPart))
                     },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text
